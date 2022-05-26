@@ -1,0 +1,6 @@
+.imageContainer {
+  width: 340px;
+  height: 500px;
+  position: relative;
+  /* must be relative because setting layout="fill" to an image component requires the parent to be relative https://nextjs.org/docs/basic-features/image-optimization*/
+}
