@@ -45,21 +45,17 @@ const Home = ({ videos }) => {
     return videos[Math.floor(Math.random() * videos.length)];
   };
 
-  // const chosenRandomVideo = randomVideo(videos);
-  // const {
-  //   thumbnail: { url },
-  //   title,
-  // } = chosenRandomVideo;
+  const chosenRandomVideo = randomVideo(videos);
+  const {
+    thumbnail: { url },
+    title,
+  } = chosenRandomVideo;
 
   return (
     <div className={styles.app}>
       <div className={styles.mainVideo}>
         <div className={styles.imageContainer}>
-          <Image
-            src={randomVideo(videos).thumbnail.url}
-            alt={randomVideo(videos).title}
-            layout="fill"
-          ></Image>
+          <Image src={url} alt={title} layout="fill"></Image>
         </div>
       </div>
     </div>
