@@ -1,6 +1,7 @@
 import { gql, GraphQLClient } from "graphql-request";
 import Image from "next/image";
 import { useEffect } from "react";
+import Section from "../components/Section";
 
 import styles from "./index.module.css";
 
@@ -51,12 +52,23 @@ const Home = ({ videos }) => {
     title,
   } = chosenRandomVideo;
 
+  const filterVideos = (videos, genre) =>
+    videos.filter((videos) => videos.tags.includes(genre.toLowerCase()));
+
   return (
     <div className={styles.app}>
       <div className={styles.mainVideo}>
         <div className={styles.imageContainer}>
           <Image src={url} alt={title} layout="fill"></Image>
         </div>
+      </div>
+      <div className={styles.videoFeed}>
+        <Section
+          genre="Drama"
+          videos={filterVideos(videos, "horror")}
+        ></Section>
+        <Section genre="Action"></Section>
+        <Section genre="Crime"></Section>
       </div>
     </div>
   );
