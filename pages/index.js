@@ -52,8 +52,23 @@ const Home = ({ videos }) => {
     title,
   } = chosenRandomVideo;
 
-  const filterVideos = (videos, genre) =>
+  const filterVideos = (genre) =>
     videos.filter((videos) => videos.tags.includes(genre.toLowerCase()));
+
+  const unseenVideos = () => videos.filter((video) => !video.seen);
+
+  const getAllAvailableTags = () => {
+    let tags = new Set();
+    videos.forEach((video) => {
+      video.tags.forEach((tag) => {
+        tags.add(tag);
+      });
+    });
+    let allTags = Array.from(tags);
+    return allTags;
+  };
+
+  const capitalizeTag = (tag) => tag.charAt(0).toUpperCase() + tag.slice(1);
 
   return (
     <div className={styles.app}>
@@ -63,12 +78,13 @@ const Home = ({ videos }) => {
         </div>
       </div>
       <div className={styles.videoFeed}>
-        <Section
-          genre="Drama"
-          videos={filterVideos(videos, "horror")}
-        ></Section>
-        <Section genre="Action"></Section>
-        <Section genre="Crime"></Section>
+        <Section genre="Recommended for you" videos={unseenVideos()}></Section>
+        {getAllAvailableTags().map((tag) => (
+          <Section
+            genre={capitalizeTag(tag)}
+            videos={filterVideos(tag)}
+          ></Section>
+        ))}
       </div>
     </div>
   );
