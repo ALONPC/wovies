@@ -1,6 +1,7 @@
 import { gql, GraphQLClient } from "graphql-request";
 import Image from "next/image";
 import { useEffect } from "react";
+import { NavBar } from "../components/NavBar";
 import Section from "../components/Section";
 
 import styles from "./index.module.css";
@@ -71,22 +72,28 @@ const Home = ({ videos }) => {
   const capitalizeTag = (tag) => tag.charAt(0).toUpperCase() + tag.slice(1);
 
   return (
-    <div className={styles.app}>
-      <div className={styles.mainVideo}>
-        <div className={styles.imageContainer}>
-          <Image src={url} alt={title} layout="fill"></Image>
+    <>
+      <NavBar></NavBar>
+      <div className={styles.app}>
+        <div className={styles.mainVideo}>
+          <div className={styles.imageContainer}>
+            <Image src={url} alt={title} layout="fill"></Image>
+          </div>
+        </div>
+        <div className={styles.videoFeed}>
+          <Section
+            genre="Recommended for you"
+            videos={unseenVideos()}
+          ></Section>
+          {getAllAvailableTags().map((tag) => (
+            <Section
+              genre={capitalizeTag(tag)}
+              videos={filterVideos(tag)}
+            ></Section>
+          ))}
         </div>
       </div>
-      <div className={styles.videoFeed}>
-        <Section genre="Recommended for you" videos={unseenVideos()}></Section>
-        {getAllAvailableTags().map((tag) => (
-          <Section
-            genre={capitalizeTag(tag)}
-            videos={filterVideos(tag)}
-          ></Section>
-        ))}
-      </div>
-    </div>
+    </>
   );
 };
 
